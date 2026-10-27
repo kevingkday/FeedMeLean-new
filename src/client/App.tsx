@@ -5,6 +5,7 @@ import type { MealLog, User, UserProfile } from '../shared/types';
 import { Layout, type NavTab } from './components/Layout';
 import { UndoToast, type ToastMessage } from './components/UndoToast';
 import { AuthPage } from './pages/AuthPage';
+import { LandingPage } from './pages/LandingPage';
 import { LogMealPage } from './pages/LogMealPage';
 import { TodayPage } from './pages/TodayPage';
 import { ProgressPage } from './pages/ProgressPage';
@@ -18,6 +19,10 @@ export const App: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [latestWeightKg, setLatestWeightKg] = useState<number | null>(null);
   const [initialWeightKg, setInitialWeightKg] = useState<number | null>(null);
+  const [unauthView, setUnauthView] = useState<'landing' | 'login' | 'register'>(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('reset_token') ? 'login' : 'landing';
+  });
 
   const [activeTab, setActiveTab] = useState<NavTab>('log');
   const [todayTotals, setTodayTotals] = useState({
@@ -145,8 +150,19 @@ export const App: React.FC = () => {
   }
 
   if (!user) {
+    if (unauthView === 'landing') {
+      return (
+        <LandingPage
+          onLogin={() => setUnauthView('login')}
+          onRegister={() => setUnauthView('register')}
+        />
+      );
+    }
+
     return (
       <AuthPage
+        initialMode={unauthView}
+        onBackToLanding={() => setUnauthView('landing')}
         onAuthenticated={(payload) => {
           setUser(payload.user);
           setProfile(payload.profile);

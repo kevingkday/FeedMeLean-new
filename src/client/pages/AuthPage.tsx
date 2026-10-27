@@ -29,13 +29,15 @@ interface AuthSuccessPayload {
 }
 
 export const AuthPage: React.FC<{
+  initialMode?: 'login' | 'register';
+  onBackToLanding?: () => void;
   onAuthenticated: (payload: AuthSuccessPayload) => void;
-}> = ({ onAuthenticated }) => {
+}> = ({ initialMode = 'login', onBackToLanding, onAuthenticated }) => {
   const params = new URLSearchParams(window.location.search);
   const initialResetToken = params.get('reset_token') || '';
 
   const [mode, setMode] = useState<'login' | 'register' | 'forgot' | 'reset'>(
-    initialResetToken ? 'reset' : 'login'
+    initialResetToken ? 'reset' : initialMode
   );
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -174,6 +176,17 @@ export const AuthPage: React.FC<{
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center px-4 py-10">
       <div className="w-full max-w-sm mx-auto">
+        {onBackToLanding && (
+          <div className="mb-4">
+            <button
+              type="button"
+              onClick={onBackToLanding}
+              className="text-xs font-semibold text-slate-600 hover:text-blue-600 cursor-pointer"
+            >
+              ← Back to FeedMeLean Home
+            </button>
+          </div>
+        )}
         <div className="text-center mb-6">
           <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl mx-auto mb-3 shadow-sm">
             FL
