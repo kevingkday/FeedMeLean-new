@@ -1,0 +1,50 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "feedmelean",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2025-02-01",
+  "dev": {
+    "port": 8788
+  },
+  "assets": {
+    "directory": "./dist/client",
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "AI_PROVIDER": "openai",
+    "AI_MODEL": "gpt-4o",
+    "GOOGLE_CLIENT_ID": "286102069729-l93hc8d1jtnmaptlimmla9788mth4jpg.apps.googleusercontent.com",
+    "RECAPTCHA_SITE_KEY": "6LcgwTctAAAAADKBarEGMnuQN8IDGS8goV_NBto8",
+    "APP_ENV": "production"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "feedmelean-db",
+      "database_id": "ce3a8b74-a3c3-4507-9537-7f12d7e13c49",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "env": {
+    "staging": {
+      "name": "feedmelean-staging",
+      "vars": {
+        "AI_PROVIDER": "openai",
+        "AI_MODEL": "gpt-4o",
+        "GOOGLE_CLIENT_ID": "286102069729-l93hc8d1jtnmaptlimmla9788mth4jpg.apps.googleusercontent.com",
+        "RECAPTCHA_SITE_KEY": "6LcgwTctAAAAADKBarEGMnuQN8IDGS8goV_NBto8",
+        "APP_ENV": "staging"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "feedmelean-staging-db",
+          "database_id": "ce3a8b74-a3c3-4507-9537-7f12d7e13c49",
+          "migrations_dir": "migrations"
+        }
+      ]
+    }
+  }
+}
+

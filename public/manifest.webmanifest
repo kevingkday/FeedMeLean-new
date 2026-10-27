@@ -1,0 +1,19 @@
+{
+  "name": "FeedMeLean — Body Fat Goal Tracker",
+  "short_name": "FeedMeLean",
+  "description": "Reach your target body-fat percentage with effortless AI meal logging.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
